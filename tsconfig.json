@@ -14,8 +14,22 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "@atom/*": ["frontend/atom/*"],
+      "@molecule/*": ["frontend/molecule/*"],
+      "@organism/*": ["frontend/organism/*"],
+      "@template/*": ["frontend/template/*"]
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    "**/*.js"
+  ],
   "exclude": ["node_modules"]
 }
