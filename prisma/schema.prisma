@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  email       String   @unique
+  name        String   @unique
+  roleId      String
+  companyCnpj String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Role    Role    @relation(fields: [roleId], references: [id])
+  Company Company @relation(fields: [companyCnpj], references: [cnpj])
+
+  @@index([roleId, companyCnpj])
+}
+
+// Essa tabela serve para recebermos os eventos de webhook do Stripe
+// para sabermos qual a role correspondente ao plano de pagamento do usuário
+model PaymentPlan {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Role Role @relation(fields: [roleId], references: [id])
+
+  @@index([roleId])
+}
+
+model Policy {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  RoleHasPolicy RoleHasPolicy[]
+}
+
+model Role {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ClientCredentials ClientCredentials[]
+  Users             User[]
+  RoleHasPolicy     RoleHasPolicy[]
+  PaymentPlan       PaymentPlan[]
+}
+
+model RoleHasPolicy {
+  roleId    String
+  policyId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Role   Role   @relation(fields: [roleId], references: [id])
+  Policy Policy @relation(fields: [policyId], references: [id])
+
+  @@id([roleId, policyId])
+}
+
+model ClientCredentials {
+  id                   String   @id @default(uuid())
+  name                 String   @unique
+  secret               String
+  accessTokenValidity  Int
+  authorizedGrantTypes String
+  refreshTokenValidity Int?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  roleId               String?
+
+  Role Role? @relation(fields: [roleId], references: [id])
+
+  @@index([roleId])
+}
+
+model Company {
+  cnpj        String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  address     String
+  phone       String
+  cellphone   String?
+  hasWhatsApp Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  User           User[]
+  CompanyProduct CompanyProduct[]
+}
+
+model CompanyProduct {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  companyCnpj String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Company Company @relation(fields: [companyCnpj], references: [cnpj])
+
+  @@index([companyCnpj])
+}
