@@ -3,6 +3,8 @@ import { prisma } from '../db/client';
 
 export const companyRouter = createRouter().query('getCompanies', {
   resolve() {
-    return prisma.company.findMany();
+    return prisma.company.findMany({
+      include: { CompanyHasCategory: { include: { Category: true } } },
+    });
   },
 });

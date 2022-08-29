@@ -96,6 +96,7 @@ model Company {
   cnpj        String   @id @default(uuid())
   name        String
   slug        String   @unique
+  description String
   address     String
   phone       String
   cellphone   String?
@@ -103,8 +104,31 @@ model Company {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  User           User[]
-  CompanyProduct CompanyProduct[]
+  User            User[]
+  CompanyProduct  CompanyProduct[]
+  CompanyHasCategory CompanyHasCategory[]
+}
+
+model CompanyHasCategory {
+  companyCnpj String
+  categoryId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Company  Company  @relation(fields: [companyCnpj], references: [cnpj])
+  Category Category @relation(fields: [categoryId], references: [id])
+
+  @@id([companyCnpj, categoryId])
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  CompanyHasCategory CompanyHasCategory[]
 }
 
 model CompanyProduct {
