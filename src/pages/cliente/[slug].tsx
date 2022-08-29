@@ -1,21 +1,20 @@
-import { trpc } from '../../utils/trpc';
+import { trpc } from '@utils/trpc';
 import { NavbarOrganism } from '@organism/navbar.organism';
-import { CardMolecule } from '@molecule/card.molecule';
+import { CompanyCardMolecule } from '@molecule/company-card.molecule';
 import { Company } from '@prisma/client';
+import { Suspense } from 'react';
 
-export default function ClientDashboard(): JSX.Element {
-  const {
-    data: companies,
-    error: errorGettingCompanies,
-    isLoading,
-  } = trpc.useQuery(['company.getCompanies']);
+export default function ClientDashboardPage(): JSX.Element {
+  const { data: companies, error: errorGettingCompanies } = trpc.useQuery(
+    ['company.getCompanies'],
+    { suspense: true }
+  );
   return (
-    <div>
+    <Suspense fallback={<h1>Carregando</h1>}>
       <NavbarOrganism />
-      {!isLoading && !errorGettingCompanies && companies && (
-        <CompaniesCards companies={companies} />
-      )}
-    </div>
+      {errorGettingCompanies && <h1>Erro</h1>}
+      {companies && <CompaniesCards companies={companies} />}
+    </Suspense>
   );
 }
 
@@ -27,7 +26,11 @@ function CompaniesCards({ companies }: CompaniesCardsProps): JSX.Element {
   return (
     <>
       {companies.map((company) => (
-        <CardMolecule key={company.cnpj} title={company.name} subtitle={''} />
+        <CompanyCardMolecule
+          key={company.cnpj}
+          title={company.name}
+          subtitle={''}
+        />
       ))}
     </>
   );

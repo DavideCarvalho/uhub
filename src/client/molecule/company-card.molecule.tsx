@@ -1,12 +1,16 @@
+import Link from 'next/link';
+
 interface CardMoleculeProps {
   title: string;
   subtitle: string;
+  href: string;
   className?: string;
 }
 
-export function CardMolecule({
+export function CompanyCardMolecule({
   title,
   subtitle,
+  href,
   className = '',
 }: CardMoleculeProps): JSX.Element {
   return (
@@ -15,6 +19,7 @@ export function CardMolecule({
         <h2 className="card-title">{title}</h2>
         <p>{subtitle}</p>
       </div>
+      <Link href={href} />
     </div>
   );
 }

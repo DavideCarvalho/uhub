@@ -17,10 +17,11 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "@atom/*": ["frontend/atom/*"],
-      "@molecule/*": ["frontend/molecule/*"],
-      "@organism/*": ["frontend/organism/*"],
-      "@template/*": ["frontend/template/*"]
+      "@atom/*": ["src/client/atom/*"],
+      "@molecule/*": ["src/client/molecule/*"],
+      "@organism/*": ["src/client/organism/*"],
+      "@template/*": ["src/client/template/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": [
