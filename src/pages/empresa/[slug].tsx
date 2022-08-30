@@ -1,7 +1,7 @@
 import { ViewCompanyTemplate } from '@template/view-company.template';
 import { trpc } from '@utils/trpc';
 import { getSsgHelpers } from '@utils/get-ssg-helpers';
-import { GetServerSideProps } from 'next'
+import { GetServerSidePropsContext } from 'next';
 
 interface ViewCompanyPageProps {
   slug: string;
@@ -24,8 +24,10 @@ export default function ViewCompanyPage({
   );
 }
 
-export async function getServerSideProps({ req, res, params }) {
-  const ssg = await getSsgHelpers({ req, res });
+export async function getServerSideProps({
+  params,
+}: GetServerSidePropsContext<{ slug: string }>) {
+  const ssg = getSsgHelpers();
   const slug = params?.slug as string;
   /*
    * Prefetching the `post.byId` query here.

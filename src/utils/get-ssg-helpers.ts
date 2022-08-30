@@ -3,10 +3,10 @@ import { appRouter } from '../server/router';
 import { createContext } from '../server/router/context';
 import superjson from 'superjson';
 
-export async function getSsgHelpers({ req, res }) {
+export function getSsgHelpers() {
   return createSSGHelpers({
     router: appRouter,
-    ctx: await createContext({ req, res }),
+    ctx: {} as any,
     transformer: superjson,
   });
 }
