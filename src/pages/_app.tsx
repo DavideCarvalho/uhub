@@ -5,6 +5,7 @@ import type { AppType } from 'next/dist/shared/lib/utils';
 import superjson from 'superjson';
 // import '../styles/globals.css';
 import { createTheme, NextUIProvider } from '@nextui-org/react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
 const darkTheme = createTheme({
   type: 'dark',
@@ -12,9 +13,17 @@ const darkTheme = createTheme({
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <NextUIProvider theme={darkTheme}>
-      <Component {...pageProps} />
-    </NextUIProvider>
+    <NextThemesProvider
+      defaultTheme="dark"
+      attribute="class"
+      value={{
+        dark: darkTheme.className,
+      }}
+    >
+      <NextUIProvider>
+        <Component {...pageProps} />
+      </NextUIProvider>
+    </NextThemesProvider>
   );
 };
 
@@ -44,5 +53,5 @@ export default withTRPC<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    */
-  ssr: false,
+  ssr: true,
 })(MyApp);

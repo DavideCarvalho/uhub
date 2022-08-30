@@ -1,5 +1,7 @@
-import { Card, Grid, Text, Badge } from '@nextui-org/react';
+import { Card, Grid, Text, Badge, Button, Row } from '@nextui-org/react';
+import NextLink from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 interface CardMolecule2Props {
   name: string;
@@ -13,11 +15,13 @@ export function CompanyCard2Molecule({
   name,
   description,
   categories,
+  href,
 }: CardMolecule2Props): JSX.Element {
+  const router = useRouter();
   return (
-    <Card css={{ p: '$6', mw: '400px' }}>
+    <Card isHoverable css={{ p: '$6', mw: '400px' }}>
       <Card.Header>
-        <Image
+        <img
           alt="nextui logo"
           src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
           width="34px"
@@ -32,7 +36,7 @@ export function CompanyCard2Molecule({
           <Grid xs={12}>
             {categories.map((category) => (
               <Badge color="primary" variant="flat" key={category}>
-                Construção
+                {category}
               </Badge>
             ))}
           </Grid>
@@ -41,6 +45,14 @@ export function CompanyCard2Molecule({
       <Card.Body css={{ py: '$2' }}>
         <Text>{description}</Text>
       </Card.Body>
+      <Card.Divider />
+      <Card.Footer>
+        <Row justify="flex-end">
+          <Button onPress={() => router.push(href)} size={'sm'} color="primary">
+            Ver
+          </Button>
+        </Row>
+      </Card.Footer>
     </Card>
   );
 }
