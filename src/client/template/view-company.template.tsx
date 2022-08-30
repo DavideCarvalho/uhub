@@ -70,7 +70,7 @@ export function ViewCompanyTemplate({
       {!isLoadingCompany && company && (
         <Grid.Container gap={2} justify="center">
           <Grid>
-            <Card css={{ p: '$6', mw: '400px' }}>
+            <Card css={{ p: '$6' }}>
               <Card.Header>
                 <Grid.Container justify="center">
                   <Grid>
