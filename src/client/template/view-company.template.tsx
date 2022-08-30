@@ -7,7 +7,10 @@ import {
   CompanyProduct,
 } from '@prisma/client';
 import { TRPCClientErrorLike } from '@trpc/client';
-import { AppRouter } from '../../server/router';
+import { appRouter, AppRouter } from '../../server/router';
+import { createSSGHelpers } from '@trpc/react/ssg';
+import { createContext } from '../../server/router/context';
+import superjson from 'superjson';
 
 interface ViewCompanyTemplateProps {
   company:
