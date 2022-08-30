@@ -1,8 +1,15 @@
 import { ViewCompanyTemplate } from '@template/view-company.template';
 import { trpc } from '@utils/trpc';
 import { getSsgHelpers } from '@utils/get-ssg-helpers';
+import { GetServerSideProps } from 'next'
 
-export default function CompanyDashboard({ slug }): JSX.Element {
+interface ViewCompanyPageProps {
+  slug: string;
+}
+
+export default function ViewCompanyPage({
+  slug,
+}: ViewCompanyPageProps): JSX.Element {
   const {
     isLoading: isLoadingCompany,
     data: company,
