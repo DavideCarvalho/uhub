@@ -1,13 +1,11 @@
 import { Card, Grid, Text, Badge, Button, Row } from '@nextui-org/react';
-import NextLink from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 interface CardMolecule2Props {
   name: string;
   description: string;
   href: string;
   categories: string[];
+  onPress: () => void;
   className?: string;
 }
 
@@ -15,9 +13,8 @@ export function CompanyCard2Molecule({
   name,
   description,
   categories,
-  href,
+  onPress,
 }: CardMolecule2Props): JSX.Element {
-  const router = useRouter();
   return (
     <Card isHoverable css={{ p: '$6', mw: '400px' }}>
       <Card.Header>
@@ -48,7 +45,7 @@ export function CompanyCard2Molecule({
       <Card.Divider />
       <Card.Footer>
         <Row justify="flex-end">
-          <Button onPress={() => router.push(href)} size={'sm'} color="primary">
+          <Button onPress={() => onPress()} size={'sm'} color="primary">
             Ver
           </Button>
         </Row>

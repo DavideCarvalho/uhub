@@ -6,6 +6,7 @@ import { CompanyCard2Molecule } from '@molecule/company-card2.molecule';
 import { TRPCClientErrorLike } from '@trpc/client';
 import { AppRouter } from '../../server/router';
 import { LayoutOrganism } from '@organism/layout.organism';
+import { useRouter } from 'next/router';
 
 export const Box = styled('div', {
   boxSizing: 'border-box',
@@ -58,6 +59,7 @@ function CompaniesCards({
   isLoading,
   error,
 }: CompaniesCardsProps): JSX.Element {
+  const router = useRouter();
   return (
     <>
       {isLoading && (
@@ -85,6 +87,7 @@ function CompaniesCards({
                 categories={company.CompanyHasCategory.map(
                   (companyHasCategory) => companyHasCategory.Category.name
                 )}
+                onPress={() => router.push(`/empresa/${company.slug}`)}
                 href={`/empresa/${company.slug}`}
               />
             </Grid>
