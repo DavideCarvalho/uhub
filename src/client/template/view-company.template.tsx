@@ -109,6 +109,24 @@ export function ViewCompanyTemplate({
           </Grid>
         </Grid.Container>
       )}
+
+      {!isLoadingCompany && company && (
+        <Grid.Container gap={2} justify="center">
+          {company.CompanyProduct.map((companyProduct) => (
+            <Grid key={companyProduct.id}>
+              <Card css={{ p: '$6', mw: '400px' }}>
+                <Card.Header>
+                  <Grid.Container justify="center">
+                    <Grid>
+                      <Text h4>{companyProduct.name}</Text>
+                    </Grid>
+                  </Grid.Container>
+                </Card.Header>
+              </Card>
+            </Grid>
+          ))}
+        </Grid.Container>
+      )}
     </LayoutOrganism>
   );
 }
