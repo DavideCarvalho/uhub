@@ -1,10 +1,10 @@
 {
+  "extends": ["config:base", ":dependencyDashboard"],
   "rangeStrategy": "pin",
   "packageRules": [
     {
       "updateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
     }
-  ],
-  "dependencyDashboard": true
+  ]
 }
