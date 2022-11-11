@@ -16,7 +16,7 @@
     "@trpc/next": "9.27.4",
     "@trpc/react": "9.27.4",
     "@trpc/server": "9.27.4",
-    "daisyui": "2.39.0",
+    "daisyui": "2.39.1",
     "next": "12.3.3",
     "next-themes": "0.2.1",
     "react": "18.2.0",
